@@ -1,0 +1,241 @@
+/* Large modal */
+.xl-dialog .p-dialog {
+  width: 900px !important;
+  max-width: 95%;
+  border-radius: 18px !important;
+}
+
+/* Modal content */
+.dialog-content {
+  padding: 32px;
+  background: #ffffff;
+}
+
+/* Grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 30px;
+}
+
+/* Full width rows */
+.form-row.full {
+  grid-column: span 2;
+}
+
+/* Labels */
+.form-row label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+  font-size: 14px;
+}
+
+/* Inputs */
+.p-inputtext,
+.form-row input {
+  width: 100%;
+  padding: 12px 14px !important;
+  border-radius: 8px !important;
+  border: 1px solid #d1d5db !important;
+  background: #f9fafb !important;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.p-inputtext:focus,
+.form-row input:focus {
+  border-color: #427753 !important;
+  box-shadow: 0 0 0 2px rgba(66, 119, 83, 0.25) !important;
+}
+
+/* p-select style */
+.p-dropdown {
+  width: 100% !important;
+  border-radius: 8px !important;
+  background: #f9fafb !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.p-dropdown:hover {
+  border-color: #427753 !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+  background: #eef5f0 !important;
+}
+
+/* Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+/* Cancel button */
+.btn-cancel {
+  background: #f1f1f3;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Save button */
+.btn-save {
+  background: #427753;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-save:disabled {
+  background: #9bb5a1; /* gris/vert clair */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-save:hover {
+  background: #365f45;
+}
+
+/* Row spécial pour 2 champs */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 colonnes égales */
+  gap: 24px; /* même espacement que ton layout */
+  width: 100%;
+}
+
+/* Align dropdown + button */
+.carburant-row .carburant-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Button + */
+.add-btn {
+    background: #427753;
+    border: none;
+    color: white;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-btn:hover {
+    background: #365f44;
+}
+
+/* Mini modal */
+.sm-dialog .p-dialog {
+    border-radius: 12px !important;
+}
+
+/* Form inside modal */
+.mini-dialog-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mini-row label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.mini-row input {
+    width: 100%;
+}
+
+/* Footer buttons */
+.mini-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancel {
+    background: #e5e7eb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+}
+
+.btn-save {
+    background: #427753;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* Centre toute la section */
+.form-section {
+  max-width: 850px;
+  margin: 0 auto;               /* CENTRER */
+  padding: 20px 10px;
+}
+
+/* Titre de la section */
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1f2937;
+  text-align: left;
+}
+
+/* Layout 2 colonnes */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 40px;
+}
+
+/* Style global inputs */
+.form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+/* Wrapper dropdown + bouton + */
+.carburant-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Bouton + */
+.add-btn {
+  background: #427753;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #355f44;
+}

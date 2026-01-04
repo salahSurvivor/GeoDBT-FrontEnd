@@ -1,0 +1,38 @@
+<div class="profile-container" *ngIf="entreprise">
+
+  <div class="profile-card">
+    <img src="assets/avatar.png" class="avatar" />
+
+    <h2>{{ entreprise.entrepriseNom || (entreprise.prenom + ' ' + entreprise.nom) }}</h2>
+    <p>{{ entreprise.email }}</p>
+    <p *ngIf="entreprise.telephone">{{ entreprise.telephone }}</p>
+    <p *ngIf="entreprise.adresse">{{ entreprise.adresse }}</p>
+
+    <!-- MEMBER ONLY -->
+    <p *ngIf="role === 'member'">
+      <strong>Entreprise :</strong>
+      {{ entreprise.entrepriseId?.entrepriseNom }}
+    </p>
+  </div>
+
+  <!-- ENTREPRISE ONLY -->
+  <div class="invite-card" *ngIf="role === 'entreprise'">
+    <h3>Invitation membre</h3>
+
+    <button (click)="generateInvite()" [disabled]="loading">
+      {{ loading ? 'Generating...' : 'Generate Invitation Code' }}
+    </button>
+
+    <div *ngIf="inviteToken" class="token-box">
+      <div class="token-header">
+        <strong>Invitation Code</strong>
+        <span class="badge">Valid 24h</span>
+      </div>
+
+      <p>{{ inviteToken }}</p>
+
+      <button class="copy-btn" (click)="copyToken()">Copy</button>
+    </div>
+  </div>
+
+</div>

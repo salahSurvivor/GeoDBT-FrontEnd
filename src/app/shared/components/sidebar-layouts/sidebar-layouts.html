@@ -1,0 +1,28 @@
+<div class="sidebar" [class.expanded]="isExpanded">
+
+    <!-- Toggle button -->
+    <div class="sidebar-header" (click)="toggleSidebar()">
+        <i class="pi pi-bars burger"></i>
+
+        @if (isExpanded) {
+            <span class="username">Salah</span>
+        }
+    </div>
+
+    <!-- MENU -->
+    <div class="menu">
+        @for (item of menu; track $index) {
+            <div [routerLink]="item.router" class="menu-item"
+                [class.active]="active === item.label"
+                (click)="selectItem(item.label)">
+
+                <i class="{{ item.icon }}"></i>
+
+                @if (isExpanded) {
+                    <span>{{ item.label }}</span>
+                }
+            </div>
+        }
+    </div>
+
+</div>

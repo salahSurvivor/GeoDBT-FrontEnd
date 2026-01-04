@@ -1,0 +1,747 @@
+/******************************************
+ * GLOBAL
+ ******************************************/
+@import "primeicons/primeicons.css";
+
+* {
+    font-family: Inter, Arial, sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+}
+
+/******************************************
+ * AUTHENTIFICATION PAGES
+ ******************************************/
+/* Subtitle */
+.subtitle a {
+    color: #444;                /* gris foncé */
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.subtitle a:hover {
+    color: #111;                /* noir */
+    text-decoration: underline; /* affiché au hover seulement */
+}
+
+/* Password eye */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .eye {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    cursor: pointer;
+}
+/* Error message */
+.error {
+    color: #ffb3b3;
+    font-size: 13px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+}
+
+/* Button premium */
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #3c8c5e;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.btn:hover {
+    background: #47a56f;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.30);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+/* Spinner */
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0px); }
+}
+
+/* Spinner animation */
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+
+/******************************************
+ * FORM VALIDATION
+ ******************************************/
+input.ng-invalid.ng-touched,
+input.ng-invalid.ng-dirty {
+    border-color: #ff4d4f;
+    background-color: #fff0f0;
+}
+
+.error {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: -12px;
+    margin-bottom: 10px;
+}
+
+input.ng-invalid.ng-touched::placeholder {
+    color: #ff4d4f;
+    opacity: 0.7;
+}
+
+/* Shake animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+    100% { transform: translateX(0); }
+}
+
+input.ng-invalid.ng-touched {
+    animation: shake 0.3s;
+}
+
+/******************************************
+ * LAYOUT (SIDEBAR + MAIN CONTENT)
+ ******************************************/
+.layout {
+    display: flex;
+    height: 100vh;
+}
+
+/******************************************
+ * SIDEBAR
+ ******************************************/
+.sidebar {
+    background: #427753d9; /* TA COULEUR */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    height: 100vh;
+    padding: 15px;
+    /* background: #111827; */
+    color: white;
+    transition: width 0.25s ease;
+    overflow: hidden;
+}
+
+.sidebar.expanded { width: 250px; }
+.sidebar:not(.expanded) { width: 80px; }
+
+/* Sidebar header */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 60px 0 10px 0;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+}
+
+.username {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* Menu items */
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #e5e7eb;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.10); /* léger voile blanc */
+}
+
+.menu-item.active {
+    background: rgba(255, 255, 255, 0.18);
+    font-weight: 600;
+    color: #ffffff; /* garder le texte blanc */
+}
+
+/* Collapsed menu */
+.sidebar:not(.expanded) .menu-item {
+    justify-content: center;
+}
+
+/******************************************
+ * MAIN CONTENT
+ ******************************************/
+
+/* MAIN CONTENT POSITION */
+.main-content {
+    width: 100%;
+    padding: 20px;
+    margin-left: 80px;
+    background: #f9fafb;
+    transition: margin-left .25s ease;
+}
+
+.main-content-push {
+  margin-left: 250px;       /* expanded */
+  transition: margin-left 0.25s ease;
+}
+
+/* When SIDEBAR is collapsed */
+.sidebar:not(.expanded) ~ .main-content {
+    margin-left: 80px !important;
+}
+
+
+/******************************************
+ * NAVBAR
+ ******************************************/
+.navbar {
+    width: 100%;
+    height: 64px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+}
+
+/* Navbar Left */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-logo {
+    background: linear-gradient(90deg, #427753, #5e8f69);
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Navbar Links */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.nav-links a:hover { color: #111827; }
+
+.nav-links a.active {
+    color: #111827;
+    border-bottom: 2px solid #2563eb;
+}
+
+/* Navbar Right */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Search bar */
+.nav-search {
+    position: relative;
+}
+
+.nav-search input {
+    padding: 8px 14px 8px 38px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    width: 220px;
+}
+
+.nav-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    color: #9ca3af;
+}
+
+/* Icons */
+.nav-icon {
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-icon:hover { transform: scale(1.2); }
+
+/* Avatar */
+.nav-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-avatar:hover { transform: scale(1.05); }
+
+/******************************************
+ * INTERFACE DESIGN
+ ******************************************/
+
+ /* ---------------- GLOBAL ---------------- */
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* ---------------- TOPBAR ---------------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+  
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #427753, #5e8f69);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  text-transform: uppercase;
+}
+
+.breadcrumbs {
+  color: #6b7280;
+  font-size: 14px;
+}
+.breadcrumbs .active {
+  color: #111827;
+  font-weight: bold;
+}
+
+/* ---------------- SEARCH + AVATAR ---------------- */
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search {
+  position: relative;
+}
+.search input {
+  padding: 8px 12px 8px 36px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  width: 240px;
+  font-size: 14px;
+}
+.search .icon {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #9ca3af;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* ---------------- ACTION BAR ---------------- */
+.action-bar {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+button:hover {
+  background: #eef2ff;
+}
+
+/* ---------------- HEADER CARD ---------------- */
+.header-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.header-sub {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* ---------------- TABLE ---------------- */
+.table-card {
+  margin-top: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+thead tr {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+}
+
+tbody tr {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+tbody td {
+  padding: 14px 12px;
+}
+
+.vehicle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.small-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+/* STATE BADGES */
+.badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.available {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.maintenance {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.unavailable {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialog-form label {
+  font-weight: 600;
+  margin-bottom: -5px;
+  color: #374151;
+}
+
+.dialog-form input,
+.dialog-form p-dropdown {
+  width: 100%;
+}
+
+.save-btn {
+  margin-top: 18px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.save-btn:hover {
+  background: #1e4fcf;
+}
+
+/******************************************
+ * Menu delete and modify
+ ******************************************/
+/* Wrapper du bouton */
+.menu-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0px;
+  background: #fff;
+}
+
+/* Bouton trois-points */
+.menu-btn {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;
+  background: #e8fff1 !important; /* vert pastel léger */
+  color: #21b26f !important;      /* vert moderne */
+  border: none !important;
+  transition: 0.25s ease;
+}
+
+.menu-btn:hover {
+  background: #d9ffe9 !important;
+  transform: scale(1.05);
+}
+
+/* Style du menu PrimeNG */
+.custom-menu .p-menu {
+  border-radius: 12px !important;
+  padding: 10px 0 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12) !important;
+}
+
+/* items du menu */
+.custom-menu .p-menuitem-link {
+  padding: 10px 16px !important;
+  gap: 10px;
+  font-size: 14px;
+  border-radius: 8px !important;
+  transition: 0.2s ease;
+}
+
+/* hover */
+.custom-menu .p-menuitem-link:hover {
+  background: #f5f7f9 !important;
+}
+
+/* icônes */
+.custom-menu .p-menuitem-icon {
+  font-size: 16px !important;
+  color: #374151 !important; /* gris foncé élégant */
+}
+
+/* texte */
+.custom-menu .p-menuitem-text {
+  color: #1f2937 !important; /* noir/gris foncé */
+  font-weight: 500;
+}
+
+/******************************************
+ * Interface section filtre
+ ******************************************/
+
+/* Container */
+.filters-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  margin: 20px 0 20px 0;
+  border: 1px solid #f0f0f0;
+}
+
+/* Header */
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 8px;
+}
+
+.filters-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.filters-subtitle {
+  margin-left: 8px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.collapse-icon {
+  font-size: 20px;
+  color: #444;
+  transition: 0.2s ease;
+}
+
+/* Body */
+.filters-body {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px; /* réduit l'espace */
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+  max-height: 500px;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.filters-body.hidden {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0; /* ← retire l’espace résiduel */
+}
+
+/* Filter items */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Icon style */
+.filter-group .icon {
+  font-size: 14px;
+  color: #427753;
+}
+
+/* Dropdown Style */
+.filter-group select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #dcdfe4;
+  background: #fafafa;
+  font-size: 14px;
+  min-width: 180px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-group select:hover {
+  border-color: #427753;
+  background: #ffffff;
+}
+
+/* Apply button */
+.apply-btn {
+  background: #427753; /* Couleur compatible avec ton design */
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  align-self: flex-end;
+  margin-top: 20px;
+  transition: 0.2s ease;
+}
+
+.apply-btn:hover {
+  background: #3a684a;
+}
+
+.toggle-icon {
+  font-size: 20px;
+  transition: transform 0.25s ease;
+}
+
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}

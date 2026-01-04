@@ -1,0 +1,320 @@
+<div class="container">
+
+  <!-- ------------ TOPBAR ------------ -->
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">ERP</div>
+      <div class="breadcrumbs">
+        <span class="active">Flotte</span> / <span>Véhicules</span>
+      </div>
+    </div>
+
+    <!-- <div class="top-actions">
+      <div class="search">
+        <span class="icon">🔍</span>
+        <input type="text" placeholder="Search..." />
+      </div>
+      <img [src]="avatar" class="avatar" />
+    </div> -->
+  </div>
+
+  <!-- ------------ FILTER ------------ -->
+
+  <div class="filters-container">
+
+    <!-- Header : titre + bouton collapse -->
+    <div class="filters-header" (click)="toggleFilters()">
+      <div>
+        <span class="filters-title">Filtres</span>
+        <span class="filters-subtitle">Sélectionnez des filtres pour affiner les résultats</span>
+      </div>
+
+      <i class="pi pi-chevron-down toggle-icon" [class.rotated]="showFilters"></i>
+    </div>
+
+    <!-- Zone des filtres -->
+    <div class="filters-body" [class.hidden]="!showFilters">
+
+      <div class="filter-group">
+        <label><i class="pi pi-car icon"></i> Marque</label>
+        <select [(ngModel)]="filters.marque">
+          <option value="">Toutes</option>
+          <option *ngFor="let m of marques" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="pi pi-gas-pump icon"></i> Carburant</label>
+        <select [(ngModel)]="filters.carburant">
+          <option value="">Tous</option>
+          <option *ngFor="let c of vehiculeCarburantOptions" [value]="c.nom">{{ c.nom }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="pi pi-cog icon"></i> État</label>
+        <select [(ngModel)]="filters.etat">
+          <option value="">Tous</option>
+          <option *ngFor="let e of etats" [value]="e">{{ e }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="pi pi-map icon"></i> Type</label>
+        <select [(ngModel)]="filters.type">
+          <option value="">Tous</option>
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+
+      <button class="apply-btn" (click)="applyFilters()">Appliquer</button>
+
+    </div>
+  </div>
+
+
+  <!-- ------------ HEADER CARD ------------ -->
+  <div class="header-card">
+    <div>
+      <div class="header-title">Liste des Véhicules</div>
+      <div class="header-sub">{{totalRecords}} Véhicules</div>
+    </div>
+
+    <div>
+      <button (click)="showModal = true">➕ Ajouter</button>
+      <button (click)="getFlotteVehiculeListForExport()">📤 Excel</button>
+      <!--button>🖨️ PDF</button-->
+      <button (click)="refresh()">🔄 Refresh</button>
+    </div>
+  </div>
+
+  <!-- ------------ TABLE PRIME NG ------------ -->
+  <div class="table-card">
+    <p-table [value]="flotteVehiculeList" [lazy]="true" (onLazyLoad)="sytemPagination($event)"
+      [totalRecords]="totalRecords" [loading]="loading" [paginator]="true" [rows]="paginatorNumber"
+      responsiveLayout="scroll">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Véhicule</th>
+          <th>Année</th>
+          <th>Numéro de châssis</th>
+          <th>Marque</th>
+          <th>Modèle</th>
+          <th>Carburant</th>
+          <th>État</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-v>
+        <tr>
+          <td>
+            <div class="menu-wrapper">
+              <p-menu #menu [model]="items" [popup]="true" appendTo="body" styleClass="custom-menu"></p-menu>
+              <p-button (click)="selectedFlotteVehicule = v; menu.toggle($event)" icon="pi pi-ellipsis-v"
+                styleClass="p-button-rounded p-button-text">
+              </p-button>
+            </div>
+          </td>
+
+          <td>
+            <div class="vehicle-row">
+              <span>{{ v.immatriculation }}</span>
+            </div>
+          </td>
+          <td>{{ v.annee }}</td>
+          <td>{{ v.numeroChassis }}</td>
+          <td>{{ v.vehiculeMarqueId?.nom }}</td>
+          <td>{{ v.vehiculeModeleId?.nom }}</td>
+          <td>{{ v.vehiculeCarburantId?.nom }}</td>
+
+          <td>
+            <span class="badge" [ngClass]="{
+                'available': v.etat === 'Disponible',
+                'maintenance': v.etat === 'En maintenance',
+                'unavailable': v.etat === 'Indisponible'
+              }">
+              {{ v.etat }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+
+  <!-- ------------ DIALOG FORM ------------ -->
+  <p-dialog [(visible)]="showModal" [modal]="true" [closable]="true" [dismissableMask]="true"
+    [style]="{ width: '95vw', height: '95vh'}" [contentStyle]="{ 'overflow-y': 'auto', 'padding':'0' }"
+    header="Ajouter un véhicule" class="xl-dialog">
+
+    <div class="dialog-content">
+
+      <form [formGroup]="vehicleForm" class="form-grid">
+
+        <!-- Matricule >
+        <div class="form-row full">
+          <label>Matricule</label>
+          <input type="text" formControlName="matricule" pInputText [(ngModel)]="vehiculeModel.matricule" />
+        </div-->
+
+        <div class="form-row">
+          <label>Matricule <span class="text-danger">*</span></label>
+          <input type="text" formControlName="immatriculation" pInputText
+            [(ngModel)]="vehiculeRecord.immatriculation" />
+        </div>
+
+        <div class="form-row-2">
+
+          <div class="form-row">
+            <label>Année</label>
+            <input type="text" formControlName="annee" pInputText pKeyFilter="int" [(ngModel)]="vehiculeRecord.annee" />
+          </div>
+
+          <div class="form-row">
+            <label>Numéro de châssis <span class="text-danger">*</span></label>
+            <input type="text" formControlName="numeroChassis" pInputText [(ngModel)]="vehiculeRecord.numeroChassis" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>État <span class="text-danger">*</span></label>
+          <p-select formControlName="etat" [options]="etats" [(ngModel)]="vehiculeRecord.etat" optionLabel="nom"
+            optionValue="nom" placeholder="Sélectionner" [style]="{'width':'100%'}" appendTo="body"></p-select>
+        </div>
+
+        <div class="form-row carburant-row">
+          <label>Marque <span class="text-danger">*</span></label>
+
+          <div class="carburant-wrapper">
+            <p-select formControlName="vehiculeMarqueId" [options]="vehiculeMarqueOptions"
+              [(ngModel)]="vehiculeRecord.vehiculeMarqueId" optionLabel="nom" optionValue="_id"
+              placeholder="Sélectionner" [style]="{'width':'100%'}" appendTo="body"></p-select>
+
+            <button type="button" class="add-btn" (click)="showAddDialog('Ajouter une marque')">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row carburant-row">
+          <label>Modèle <span class="text-danger">*</span></label>
+
+          <div class="carburant-wrapper">
+            <p-select formControlName="vehiculeModeleId" [options]="vehiculeModeleOptions"
+              [(ngModel)]="vehiculeRecord.vehiculeModeleId" optionLabel="nom" optionValue="_id"
+              placeholder="Sélectionner" [style]="{'width':'100%'}" appendTo="body"></p-select>
+
+            <button type="button" class="add-btn" (click)="showAddDialog('Ajouter un modèle')">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row carburant-row">
+          <label>Carburant <span class="text-danger">*</span></label>
+
+          <div class="carburant-wrapper">
+            <p-select formControlName="vehiculeCarburantId" [options]="vehiculeCarburantOptions"
+              [(ngModel)]="vehiculeRecord.vehiculeCarburantId" optionLabel="nom" optionValue="_id"
+              placeholder="Sélectionner" [style]="{'width':'100%'}" appendTo="body"></p-select>
+
+            <button type="button" class="add-btn" (click)="showAddDialog('Ajouter un carburant')">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!--div class="form-row carburant-row">
+          <label>Type</label>
+
+          <div class="carburant-wrapper">
+            <p-select formControlName="type" [options]="vehiculeTypeOptions" [(ngModel)]="typeVehicule"
+              optionLabel="nom" placeholder="Sélectionner" [style]="{'width':'100%'}" appendTo="body"></p-select>
+
+            <button type="button" class="add-btn" (click)="showAddDialog('Ajouter un type')">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+        </div-->
+        <!-- Carburant -->
+        <!--div class="form-row">
+          <label>Carburant</label>
+          <p-select formControlName="carburant" [options]="vehiculeCarburantOptions" [(ngModel)]="vehiculeCarburant"
+            optionLabel="nom" [style]="{'width':'100%'}" placeholder="Sélectionner" />
+        </div-->
+
+        <!--div class="form-row-2">
+
+          <div class="form-row">
+            <label>Nom</label>
+            <input type="text" formControlName="type" pInputText [(ngModel)]="vehiculeCarburant" />
+          </div>
+
+          <div class="form-row">
+            <label>Prénom</label>
+            <input type="text" formControlName="type" pInputText [(ngModel)]="vehiculeCarburant" />
+          </div>
+
+        </div-->
+
+      </form>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn-cancel" type="button" (click)="onCancel()">Annuler</button>
+
+        <button class="btn-save" (click)="submitRecord()" [disabled]="loading || vehicleForm.invalid">
+          <ng-container *ngIf="!loading; else loadingTpl">
+            Enregistrer
+          </ng-container>
+          <ng-template #loadingTpl>
+            <span class="spinner"></span> Chargement...
+          </ng-template>
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </p-dialog>
+
+  <!-- Small modal -->
+  <p-dialog [(visible)]="showAddModal" [modal]="true" [header]="dialogName" [style]="{ width: '380px' }"
+    [closable]="true" class="sm-dialog">
+
+    <div class="mini-dialog-body">
+      <div class="mini-row">
+        <label>Code</label>
+        <input type="text" pInputText [(ngModel)]="newRecord.code" />
+      </div>
+
+      <div class="mini-row">
+        <label>Nom <span class="text-danger">*</span></label>
+        <input type="text" pInputText [(ngModel)]="newRecord.nom" />
+      </div>
+    </div>
+
+    <div class="mini-footer">
+      <button class="btn-cancel" (click)="showAddModal = false">Annuler</button>
+
+      <button class="btn-save" (click)="addFaster()" [disabled]="loading || !newRecord.nom">
+        <ng-container *ngIf="!loading; else loadingTpl">
+          Ajouter
+        </ng-container>
+        <ng-template #loadingTpl>
+          <span class="spinner"></span> Chargement...
+        </ng-template>
+      </button>
+    </div>
+
+  </p-dialog>
+
+
+
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

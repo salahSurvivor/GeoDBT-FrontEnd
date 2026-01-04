@@ -1,0 +1,61 @@
+<div class="login-wrapper">
+
+  <!-- LEFT SIDE -->
+  <div class="left">
+    <div class="left-box">
+      <div class="brand">
+        <img src="/img/logo.png" class="brand-logo">
+        <div>
+          <h3 class="brand-title">Gygax ERP</h3>
+          <p class="brand-sub">Fleet Geolocation System</p>
+        </div>
+      </div>
+
+      <h1 class="welcome">Bienvenue 👋</h1>
+    <p class="subtitle">
+      <a routerLink="/register">Créer un nouveau compte</a>
+    </p>
+
+      <form #registerForm="ngForm" (ngSubmit)="submit(registerForm)" novalidate>
+
+        <label>Email</label>
+        <input type="email" placeholder="Email address" [(ngModel)]="compteData.email" name="email" required email
+          #email="ngModel" />
+
+        <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <span *ngIf="email.errors?.['required']">Email est obligatoire</span>
+          <span *ngIf="email.errors?.['email']">Email invalide</span>
+        </div>
+
+        <label>Mot de passe</label>
+        <div class="password-wrapper">
+          <input [type]="passwordFieldType" placeholder="Password" [(ngModel)]="compteData.password" name="password"
+            required minlength="6" #password="ngModel" />
+          <span class="eye" (click)="togglePassword()">👁️</span>
+        </div>
+        <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+          <span *ngIf="password.errors?.['required']">Mot de passe est obligatoire</span>
+        </div>
+
+
+        <button class="btn" type="submit" [disabled]="loading || registerForm.invalid">
+          <ng-container *ngIf="!loading; else loadingTpl">
+            Se connecter
+          </ng-container>
+          <ng-template #loadingTpl>
+            <span class="spinner"></span> Chargement...
+          </ng-template>
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="right">
+    <img class="bg-img" src="/img/geolocation.png" alt="">
+  </div>
+
+</div>
+
+<p-toast></p-toast>

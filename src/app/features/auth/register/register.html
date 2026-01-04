@@ -1,0 +1,304 @@
+<div class="page">
+  <div class="card">
+
+    <div class="form-header">
+      <img
+        class="logo-img"
+        src="https://cdn-icons-png.flaticon.com/512/727/727790.png"
+        alt="logo"
+      />
+
+      <div>
+        <h2 class="title">Bienvenue</h2>
+        <p class="subtitle">
+          <a href="#">Vous avez déjà un compte?</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Register type tabs -->
+    <div class="register-tabs">
+      <label [class.active]="registerType === 'company'">
+        <input
+          type="radio"
+          name="registerType"
+          value="company"
+          [(ngModel)]="registerType"
+        />
+        Entreprise
+      </label>
+
+      <label [class.active]="registerType === 'member'">
+        <input
+          type="radio"
+          name="registerType"
+          value="member"
+          [(ngModel)]="registerType"
+        />
+        Member
+      </label>
+    </div>
+
+    <!-- ================= COMPANY FORM ================= -->
+    <form
+      *ngIf="registerType === 'company'"
+      #registerForm="ngForm"
+      (ngSubmit)="submit(registerForm)"
+      novalidate
+    >
+
+      <label>Entreprise</label>
+      <input
+        type="text"
+        placeholder="Entreprise"
+        [(ngModel)]="companyInfo.entrepriseNom"
+        name="entrepriseNom"
+        required
+        #entreprise="ngModel"
+      />
+      <div class="error" *ngIf="entreprise.invalid && (entreprise.dirty || entreprise.touched)">
+        Entreprise est obligatoire
+      </div>
+
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Email address"
+        [(ngModel)]="companyInfo.email"
+        name="email"
+        required
+        email
+        #email="ngModel"
+      />
+      <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+        <span *ngIf="email.errors?.['required']">Email est obligatoire</span>
+        <span *ngIf="email.errors?.['email']">Email invalide</span>
+      </div>
+
+      <label>Téléphone</label>
+      <input
+        type="text"
+        placeholder="Téléphone"
+        [(ngModel)]="companyInfo.telephone"
+        name="telephone"
+        required
+        pattern="^[0-9]{8,15}$"
+        #telephone="ngModel"
+      />
+      <div class="error" *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+        <span *ngIf="telephone.errors?.['required']">Téléphone est obligatoire</span>
+        <span *ngIf="telephone.errors?.['pattern']">Numéro invalide</span>
+      </div>
+
+      <label>Adresse</label>
+      <input
+        type="text"
+        placeholder="Adresse"
+        [(ngModel)]="companyInfo.adresse"
+        name="adresse"
+        required
+        #adresse="ngModel"
+      />
+      <div class="error" *ngIf="adresse.invalid && (adresse.dirty || adresse.touched)">
+        Adresse est obligatoire
+      </div>
+
+      <label>Mot de passe</label>
+      <div class="password-wrapper">
+        <input
+          [type]="passwordFieldType"
+          placeholder="Password"
+          [(ngModel)]="companyInfo.password"
+          name="password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <span class="eye" (click)="togglePassword('password')">👁️</span>
+      </div>
+      <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+        <span *ngIf="password.errors?.['required']">Mot de passe est obligatoire</span>
+        <span *ngIf="password.errors?.['minlength']">Minimum 6 caractères</span>
+      </div>
+
+      <label>Confirmer le mot de passe</label>
+      <div class="password-wrapper">
+        <input
+          [type]="passwordVerifyFieldType"
+          placeholder="Confirmer Password"
+          [(ngModel)]="passwordVerify"
+          name="passwordVerify"
+          required
+          #passwordVerifyField="ngModel"
+        />
+        <span class="eye" (click)="togglePassword('verify')">👁️</span>
+      </div>
+
+      <div class="error" *ngIf="passwordVerifyField.invalid && (passwordVerifyField.dirty || passwordVerifyField.touched)">
+        Confirmer le mot de passe est obligatoire
+      </div>
+
+      <div class="error" *ngIf="passwordVerify && passwordVerify !== companyInfo.password">
+        Les mots de passe ne correspondent pas
+      </div>
+
+      <button
+        class="btn"
+        type="submit"
+        [disabled]="
+          loading ||
+          registerForm.invalid ||
+          (passwordVerify && passwordVerify !== companyInfo.password)
+        "
+      >
+        <ng-container *ngIf="!loading; else loadingTpl">
+          S'inscrire
+        </ng-container>
+        <ng-template #loadingTpl>
+          <span class="spinner"></span> Chargement...
+        </ng-template>
+      </button>
+
+    </form>
+
+    <!-- ================= MEMBER FORM ================= -->
+    <form
+      *ngIf="registerType === 'member'"
+      #memberForm="ngForm"
+      (ngSubmit)="submit(memberForm)"
+      novalidate
+    >
+
+      <label>Prénom</label>
+      <input
+        type="text"
+        placeholder="Prénom"
+        [(ngModel)]="memberInfo.firstName"
+        name="firstName"
+        required
+        #firstName="ngModel"
+      />
+      <div class="error" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+        Prénom est obligatoire
+      </div>
+
+      <label>Nom</label>
+      <input
+        type="text"
+        placeholder="Nom"
+        [(ngModel)]="memberInfo.lastName"
+        name="lastName"
+        required
+        #lastName="ngModel"
+      />
+      <div class="error" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+        Nom est obligatoire
+      </div>
+
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Email address"
+        [(ngModel)]="memberInfo.email"
+        name="email"
+        required
+        email
+        #email="ngModel"
+      />
+      <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+        <span *ngIf="email.errors?.['required']">Email est obligatoire</span>
+        <span *ngIf="email.errors?.['email']">Email invalide</span>
+      </div>
+
+      <label>Téléphone</label>
+      <input
+        type="text"
+        placeholder="Téléphone"
+        [(ngModel)]="memberInfo.telephone"
+        name="telephone"
+        required
+        pattern="^[0-9]{8,15}$"
+        #telephone="ngModel"
+      />
+      <div class="error" *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)">
+        <span *ngIf="telephone.errors?.['required']">Téléphone est obligatoire</span>
+        <span *ngIf="telephone.errors?.['pattern']">Numéro invalide</span>
+      </div>
+
+      <label>Invitation Code</label>
+      <input
+        type="text"
+        placeholder="Enter invitation code"
+        [(ngModel)]="inviteToken"
+        name="inviteToken"
+        required
+        #invite="ngModel"
+      />
+
+      <div class="error" *ngIf="invite.invalid && (invite.dirty || invite.touched)">
+        Invitation code is required
+      </div>
+
+      <label>Mot de passe</label>
+      <div class="password-wrapper">
+        <input
+          [type]="passwordFieldType"
+          placeholder="Mot de passe"
+          [(ngModel)]="memberInfo.password"
+          name="memberPassword"
+          required
+          minlength="6"
+          #memberPassword="ngModel"
+        />
+        <span class="eye" (click)="togglePassword('password')">👁️</span>
+      </div>
+      <div class="error" *ngIf="memberPassword.invalid && (memberPassword.dirty || memberPassword.touched)">
+        <span *ngIf="memberPassword.errors?.['required']">Mot de passe est obligatoire</span>
+        <span *ngIf="memberPassword.errors?.['minlength']">Minimum 6 caractères</span>
+      </div>
+
+      <label>Confirmer le mot de passe</label>
+      <div class="password-wrapper">
+        <input
+          [type]="passwordVerifyFieldType"
+          placeholder="Confirmer le mot de passe"
+          [(ngModel)]="passwordVerify"
+          name="memberPasswordVerify"
+          required
+          #memberPasswordVerify="ngModel"
+        />
+        <span class="eye" (click)="togglePassword('verify')">👁️</span>
+      </div>
+
+      <div class="error" *ngIf="memberPasswordVerify.invalid && (memberPasswordVerify.dirty || memberPasswordVerify.touched)">
+        Confirmer le mot de passe est obligatoire
+      </div>
+
+      <div class="error" *ngIf="passwordVerify && passwordVerify !== memberInfo.password">
+        Les mots de passe ne correspondent pas
+      </div>
+
+      <button
+        class="btn"
+        type="submit"
+        [disabled]="
+          loading ||
+          memberForm.invalid ||
+          (passwordVerify && passwordVerify !== memberInfo.password)
+        "
+      >
+        <ng-container *ngIf="!loading; else loadingTpl">
+          S'inscrire
+        </ng-container>
+        <ng-template #loadingTpl>
+          <span class="spinner"></span> Chargement...
+        </ng-template>
+      </button>
+
+    </form>
+
+
+  </div>
+</div>
+
+<p-toast></p-toast>

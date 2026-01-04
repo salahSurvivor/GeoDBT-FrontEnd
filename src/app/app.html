@@ -1,0 +1,52 @@
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
+<!-- * * * * * * * to get started with your project! * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+<style>
+
+</style>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+@if (showHeader) {
+<div class="navbar">
+    <div class="nav-left">
+        <div class="nav-logo">ERP</div>
+    </div>
+
+    <div class="nav-right">
+        <div class="nav-icon">🔔</div>
+        <a href="/profile" class="avatar-link">h
+            <!-- <p-avatar
+                image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
+                shape="circle">
+            </p-avatar> -->
+        </a>
+    </div>
+</div>
+
+<div class="layout">
+
+    <app-sidebar-layouts (sidebarToggle)="onSidebarToggle($event)"></app-sidebar-layouts>
+
+    <div class="main-content" [class.main-content-push]="sidebarExpanded">
+        <div class="content-card">
+            <router-outlet />
+        </div>
+    </div>
+
+</div>
+}
+@else if (!showHeader) {
+<router-outlet />
+}

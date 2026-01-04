@@ -1,0 +1,116 @@
+/* ===== Page Container ===== */
+.profile-container {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+/* ===== Cards ===== */
+.profile-card,
+.invite-card {
+  background: #ffffff;
+  width: 320px;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* ===== Avatar ===== */
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+/* ===== Profile Text ===== */
+.profile-card h2 {
+  margin: 10px 0 5px;
+  color: #111827;
+}
+
+.profile-card p {
+  margin: 6px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* ===== Invite Section ===== */
+.invite-card h3 {
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+/* ===== Button ===== */
+.invite-card button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.invite-card button:hover {
+  background: #4338ca;
+}
+
+.invite-card button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ===== Token Box ===== */
+.token-box {
+  margin-top: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 12px;
+  word-break: break-all;
+  border: 1px solid #e5e7eb;
+}
+
+/* ===== Token Header ===== */
+.token-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* ===== Badge ===== */
+.badge {
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* ===== Copy Button ===== */
+.copy-btn {
+  margin-top: 12px;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: #1f2937;
+}
