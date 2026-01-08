@@ -133,7 +133,6 @@ export class FlotteVehicules implements OnInit {
     const subscription = this.genericService.readWithPaginatorSystem('vehicule', params).subscribe({
       next: (list) => {
         const items = JSON.parse(JSON.stringify(list));
-        console.log('data: ', items);
         this.flotteVehiculeList = items.data;
         this.totalRecords = items.total;
 
